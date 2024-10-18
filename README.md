@@ -17,8 +17,6 @@
             <div class="right-leg"></div>
         </div>
     </div>
-
-    <audio id="music" src="maps.mp3" autoplay loop></audio>
     
     <button onclick="startDance()">Start Dance</button>
 

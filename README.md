@@ -7,102 +7,120 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Stickman Dance</h1>
-    <div id="stickman">
-        <div class="head"></div>
-        <div class="body"></div>
-        <div class="left-arm"></div>
-        <div class="right-arm"></div>
-        <div class="left-leg"></div>
-        <div class="right-leg"></div>
+    <div class="stage">
+        <div class="stickman">
+            <div class="head"></div>
+            <div class="body"></div>
+            <div class="left-arm"></div>
+            <div class="right-arm"></div>
+            <div class="left-leg"></div>
+            <div class="right-leg"></div>
+        </div>
     </div>
+
+    <audio id="music" src="maps.mp3" autoplay loop></audio>
+    
+    <button onclick="startDance()">Start Dance</button>
+
+    <script src="script.js"></script>
 </body>
 </html>
 body {
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
     background-color: #f0f0f0;
     font-family: Arial, sans-serif;
 }
 
-#stickman {
+.stage {
+    width: 200px;
+    height: 400px;
+    background-color: #fff;
     position: relative;
-    width: 60px;
-    height: 150px;
-    margin: 50px auto;
+}
+
+.stickman {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .head {
-    width: 30px;
-    height: 30px;
-    border: 3px solid black;
+    width: 50px;
+    height: 50px;
+    border: 5px solid black;
     border-radius: 50%;
-    position: absolute;
-    top: 0;
-    left: 15px;
 }
 
 .body {
-    width: 6px;
-    height: 60px;
+    width: 5px;
+    height: 100px;
     background-color: black;
-    position: absolute;
-    top: 30px;
-    left: 27px;
 }
 
 .left-arm, .right-arm {
     width: 50px;
-    height: 6px;
+    height: 5px;
     background-color: black;
     position: absolute;
-    top: 35px;
+    top: 50px;
 }
 
 .left-arm {
-    transform-origin: right;
-    left: -50px;
+    transform: rotate(-30deg);
+    transform-origin: left;
 }
 
 .right-arm {
-    transform-origin: left;
-    right: -50px;
+    transform: rotate(30deg);
+    transform-origin: right;
 }
 
 .left-leg, .right-leg {
-    width: 6px;
-    height: 50px;
+    width: 5px;
+    height: 70px;
     background-color: black;
     position: absolute;
-    top: 90px;
+    bottom: 0;
 }
 
 .left-leg {
-    transform-origin: top right;
-    left: 10px;
+    transform: rotate(30deg);
+    transform-origin: top;
 }
 
 .right-leg {
-    transform-origin: top left;
-    right: 10px;
+    transform: rotate(-30deg);
+    transform-origin: top;
+}
+let stickman = document.querySelector('.stickman');
+
+function startDance() {
+    let music = document.getElementById('music');
+    music.play();
+    
+    stickman.classList.add('dance');
 }
 
-/* Keyframes for dancing animation */
-@keyframes danceMove {
-    0%, 100% {
-        transform: rotate(0);
-    }
-    25% {
-        transform: rotate(20deg);
-    }
-    50% {
-        transform: rotate(-20deg);
-    }
-    75% {
-        transform: rotate(20deg);
-    }
-}
+setInterval(() => {
+    let leftArm = document.querySelector('.left-arm');
+    let rightArm = document.querySelector('.right-arm');
+    let leftLeg = document.querySelector('.left-leg');
+    let rightLeg = document.querySelector('.right-leg');
+    
+    // Arm Dance Animation
+    leftArm.style.transform = leftArm.style.transform === 'rotate(-30deg)' ? 'rotate(-90deg)' : 'rotate(-30deg)';
+    rightArm.style.transform = rightArm.style.transform === 'rotate(30deg)' ? 'rotate(90deg)' : 'rotate(30deg)';
+    
+    // Leg Dance Animation
+    leftLeg.style.transform = leftLeg.style.transform === 'rotate(30deg)' ? 'rotate(70deg)' : 'rotate(30deg)';
+    rightLeg.style.transform = rightLeg.style.transform === 'rotate(-30deg)' ? 'rotate(-70deg)' : 'rotate(-30deg)';
+}, 500);  // Change 500 for faster/slower dancing
 
-/* Animate arms and legs */
-.left-arm, .right-arm, .left-leg, .right-leg {
-    animation: danceMove 1s infinite;
-}
